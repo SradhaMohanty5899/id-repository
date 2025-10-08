@@ -141,11 +141,11 @@ public class MosipTestRunner {
 		if (!runType.equalsIgnoreCase("JAR")) {
 			AuthTestsUtil.removeOldMosipTempTestResource();
 		}
-		BaseTestCase.currentModule = "idrepo";
-		BaseTestCase.certsForModule = "idrepo";
+		AdminTestUtil.copyIdrepoTestResource();
+		BaseTestCase.currentModule = BaseTestCase.runContext + GlobalConstants.IDREPO;
+		BaseTestCase.certsForModule = BaseTestCase.currentModule;
 		IdRepoUtil.dbCleanUp();
 
-		AdminTestUtil.copyIdrepoTestResource();
 		BaseTestCase.otpListener = new OTPListener();
 		BaseTestCase.otpListener.run();
 	}
