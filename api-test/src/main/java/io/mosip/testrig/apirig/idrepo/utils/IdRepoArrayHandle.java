@@ -214,9 +214,24 @@ public class IdRepoArrayHandle {
 	                //82
 	                
 	                else if (testCaseName.contains("_withcasesensitivehandles")) {
+
 	                    for (int j = 0; j < handleArray.length(); j++) {
+
 	                        JSONObject obj = handleArray.getJSONObject(j);
-	                        obj.put("value", "HANDLES");
+
+	                        if (obj.has("tags")) {
+
+	                            JSONArray tagsArray = obj.getJSONArray("tags");
+
+	                            for (int k = 0; k < tagsArray.length(); k++) {
+
+	                                String tagValue = tagsArray.getString(k);
+
+	                                tagsArray.put(k, tagValue.toUpperCase());
+	                            }
+
+	                            obj.put("tags", tagsArray);
+	                        }
 	                    }
 	                }
 	                //77
@@ -233,14 +248,21 @@ public class IdRepoArrayHandle {
 	                	 identity.remove("selectedHandles");
 	                }
 	              
-	                else if (testCaseName.contains("_withdublicatevalue")) {
-	                    for (int j = 0; j < handleArray.length(); j++) {
-	                        JSONObject obj = handleArray.getJSONObject(j);
-	                        if (testCaseName.contains("_save_withdublicatevalue"))
-	                        selectedHandlesValue=obj.getString("value");
-	                        obj.put("value", selectedHandlesValue);
-	                    }
-	                }
+					else if (testCaseName.contains("_withdublicatevalue")) {
+						for (int j = 0; j < handleArray.length(); j++) {
+							JSONObject obj = handleArray.getJSONObject(j);
+							if (testCaseName.contains("_save_withdublicatevalue")) {
+								String value = obj.getString("value");
+								if (value.equals("$EMAILVALUE$")) {
+									selectedHandlesValue = BaseTestCase.currentModule + "_"
+											+ BaseTestCase.generateRandomAlphaNumericString(5) + "@mosip.com";
+								} else {
+									selectedHandlesValue = value;
+								}
+							}
+							obj.put("value", selectedHandlesValue);
+						}
+					}
 	                else if (testCaseName.contains("_withmultipledublicatevalue")) {
 		                        JSONObject secondValue = new JSONObject();
 		                        secondValue.put("value", selectedHandlesValue);

@@ -91,6 +91,9 @@ public class AddIdentity extends IdRepoUtil implements ITest {
 	public void test(TestCaseDTO testCaseDTO) throws AuthenticationTestException, AdminTestException, SecurityXSSException {
 		testCaseName = testCaseDTO.getTestCaseName();
 		testCaseName = IdRepoUtil.isTestCaseValidForExecution(testCaseDTO);
+		if(testCaseDTO.getUniqueIdentifier().contains("TC_IDRepo_AddIdentityArrayHandle_25") || testCaseDTO.getUniqueIdentifier().contains("TC_IDRepo_AddIdentityArrayHandle_39")) {
+			System.out.print("Debug");
+		}
 		if (HealthChecker.signalTerminateExecution) {
 			throw new SkipException(
 					GlobalConstants.TARGET_ENV_HEALTH_CHECK_FAILED + HealthChecker.healthCheckFailureMapS);
@@ -147,7 +150,7 @@ public class AddIdentity extends IdRepoUtil implements ITest {
 			inputJson = IdRepoArrayHandle.replaceArrayHandleValues(inputJson,testCaseName);
 		}
 		if (testCaseName.contains("_withInvalidEmail") || testCaseName.contains("_invalid_Email")) {
-			inputJson = replaceKeywordWithValue(inputJson, "$EMAILVALUE$", "@#$DDFFGG");
+			inputJson = replaceKeywordWithValue(inputJson, "$EMAILVALUE$", "@#$DDFFGG11");
 		}
 		if (testCaseName.contains("Empty_Email")) {
 			inputJson = replaceKeywordWithValue(inputJson, "$EMAILVALUE$", " ");
